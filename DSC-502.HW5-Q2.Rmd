@@ -1,0 +1,54 @@
+---
+title: "DSC-502.HW5"
+author: "Luke Stemmerich"
+date: "2026-03-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Packages
+
+```{r Packages}
+# Download neccessary packages
+options(repos = c(CRAN = "https://cloud.r-project.org"))
+knitr::opts_chunk$set(echo = TRUE)
+install.packages("remotes")
+remotes::install_version("ggrepel", version = "0.9.6")
+library(maps)
+library(mapdata)
+library(ggplot2)
+library(ggrepel)
+library(cowplot)
+library(socviz)
+library(gridExtra)
+library(tidyr)
+library(dplyr)
+library(ggridges)
+library(colorspace)
+library(stringr)
+library(forcats)
+```
+
+## Question 2
+
+```{r Q2-a}
+# a
+state <- map_data("state")
+california <- state[state$region == "california",]
+head(california)
+```
+
+```{r Q2-b}
+load("C:/Users/praxi/OneDrive/Desktop/DSC-502/DATA/wind_turbines.rda")
+wind_ca <- wind_turbines[wind_turbines$t_state == "CA",]
+head(wind_ca)
+```
+
+```{r Q2-c}
+ggplot() + geom_polygon(data = california, aes(x=long, y = lat, group = group)) + 
+  coord_fixed(1.3) + geom_point(data = wind_ca, aes(x=xlong, y = ylat, group = t_state), fill = NA, color = "red") + 
+  coord_fixed(1.3)
+```
